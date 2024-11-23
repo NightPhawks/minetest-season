@@ -1,0 +1,24 @@
+#Enable Arctic seasons (Night/Day)
+season.arctic (Arctic seasons) bool true
+
+#Enable boreal temperate seasons (Winter/Spring/Summer/Autumn)
+season.temperate (Boreal temperate seasons) bool true
+
+#Enable boreal tropical seasons (Wet/Dry)
+season.tropical (Boreal tropical seasons) bool true
+
+#While equatorial climate do not have seasons this cycle is used a fallback and shouldn't be removed
+season.equatorial (Equatorial seasons) bool true
+
+#Enable austral tropical seasons (dry/wet)
+season.tropical2 (Austral tropical seasons) bool true
+
+#Enable austral temperate seasons (Summer/Autumn/Winter/Spring)
+season.temperate2 (Austral temperate seasons) bool true
+
+#Enable Antacrtic seasons (Day/Night)
+season.antarctic (Antarctic seasons) bool true
+
+#Length of a full seasonal cycle in in-game day
+#Minimum 16
+season.length_of_year (Length of the year) int 360 16 8000000
