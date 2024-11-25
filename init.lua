@@ -4,6 +4,7 @@
 local mt = minetest
 
 season = {}
+season.modpath = minetest.get_modpath("season")
 
 local settings = mt.settings
 
@@ -51,31 +52,13 @@ local storage = mt.get_mod_storage()
 
 local yearday = storage:get_int("yearday")
 
---init other variables
+--load utility function
+dofile(season.modpath.."/utils.lua")
 
---not really hardcoded
-local hardcoded_areas = AreaStore()
-if cycles.arctic then
-	hardcoded_areas:insert_area(vector.new(-32000, -32000, 24000), vector.new(32000, 32000, 32000), "arctic", 1)
-end
-if cycles.antarctic then
-	hardcoded_areas:insert_area(vector.new(-32000, -32000, -32000), vector.new(32000, 32000, -24000), "antarctic", 2)
-end
-if cycles.tropical2 then
-	hardcoded_areas:insert_area(vector.new(-32000, -32000, -12000), vector.new(32000, 32000, -4000), "tropical2", 3)
-end
-if cycles.tropical then
-	hardcoded_areas:insert_area(vector.new(-32000, -32000, 4000), vector.new(32000, 32000, 12000), "tropical", 4)
-end
-if cycles.temperate2 then
-	hardcoded_areas:insert_area(vector.new(-32000, -32000, -32000), vector.new(32000, 32000, -4000), "temperate2", 5)
-end
-if cycles.temperate then
-	hardcoded_areas:insert_area(vector.new(-32000, -32000, 4000), vector.new(32000, 32000, 32000), "temperate", 6)
-end
-if cycles.equatorial then
-	hardcoded_areas:insert_area(vector.new(-32000, -32000, -32000), vector.new(32000, 32000, 32000), "equatorial", 7)
-end
+--load areas system
+dofile(season.modpath.."/area.lua")
+
+--init other variables
 
 local solstice = 0
 local equinox = math.round(yearlength*0.25)
@@ -94,24 +77,6 @@ end
 current_daylength.equatorial.sunrise = 0.25
 current_daylength.equatorial.sunset = 0.75
 
---linear interpolation
-local function interp(min, max, value)
-	local delta = max - min
-	return min + delta * value
-end
-
---reverse linear interpolation
-local function interp2(min, max, value)
-	local delta = max - min
-	value = value - min
-	return value/delta
-end
-
---smothing
-local function smoth(val)
-	return math.sin(2*val*math.pi)^2
-end
-
 --backward compatibility
 if not mt.time_to_day_night_ratio then
 	function mt.time_to_day_night_ratio(time)
@@ -129,16 +94,11 @@ if not mt.time_to_day_night_ratio then
 	end
 end
 
---simple checkers
-local function is_polar(season) return season == "arctic" or season == "antarctic" end
-local function is_temperate(season) return season == "temperate" or season == "temperate2" end
-local function is_tropical(season) return season == "tropical" or season == "tropical2" end
-
 --base function of the mod
-function season.get_season(arg)
-	local a = hardcoded_areas:get_areas_for_pos(arg:get_pos(), false, true)
+function season.get_season(...)
+	--local s = season.get_season_area(...)
 	--print(dump2(next(a)))
-	return a[next(a)].data
+	return season.get_season_area(...)
 end
 
 --refresh current season table in function of the day of the year

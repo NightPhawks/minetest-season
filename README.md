@@ -14,7 +14,7 @@ Currently the mod is a heavy WIP, expect malfunction. The mod contain 7 cycles
 plus Equatorial. For now seasons are simply assigned to areas (Area mode) and season only affect
 player's length of the day, including polar day and night.
 
-Areas are dispatched as the following (Y axis):
+Areas are dispatched as the following (Z axis):
 - Arctic			(24 km - 32 km North)
 - Boreal Temperate	(12 km - 24 km North)
 - Boreal Tropical	(4 km - 12 km North)
@@ -27,10 +27,9 @@ Areas are dispatched as the following (Y axis):
 
 For know there is only one shared function:
 
-`season.get_season(arg)`
+`season.get_season(...)`
 
-with `arg` any `Object` with valid `get_pos`
-method and return the current season at the object position
+with `...` any `Object | Vector | {x, y, z} | x, z | x, y, z` arguments and return the current season at the position
 
 ### Upcoming Features
 
