@@ -23,6 +23,12 @@ Areas are dispatched as the following (Z axis):
 - Austral Temperate	(12 km - 24 km South)
 - Antarctic			(24 km - 32 km South)
 
+### Chat Commands
+
+`/year-day [<yearday> | solstice | equinox | solstice2 | equinox2]`
+
+Allow to get or set the day of the year, require the `settime` privilege
+
 ### Application Programming Interface
 
 For know there is only one shared function:

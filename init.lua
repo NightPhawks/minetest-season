@@ -94,6 +94,11 @@ if not mt.time_to_day_night_ratio then
 	end
 end
 
+--privs definition
+mt.register_privilege("season", {
+	description = "Allow manipulation of seasons areas"
+})
+
 --base function of the mod
 function season.get_season(...)
 	--local s = season.get_season_area(...)
@@ -246,7 +251,40 @@ local function season_loop(t)
 	lasttime = time
 end
 
+--chat command definition
+
+local cmd_yearday = {
+	params = "[<yearday> | solstice | equinox | solstice2 | equinox2]",
+	description = "allow to get or set year",
+	privs = {settime = true},
+	func = function(name, param)
+		local n = tonumber(param)
+		if #param < 1 then
+			return true, "Day of the year is "..yearday
+		elseif n then
+			yearday = n%yearlength
+			return true, "Day of the year is now "..yearday
+		elseif param == "solstice" then
+			yearday = solstice
+			return true, "Day of the year is now "..yearday
+		elseif param == "equinox" then
+			yearday = equinox
+			return true, "Day of the year is now "..yearday
+		elseif param == "solstice2" then
+			yearday = solstice2
+			return true, "Day of the year is now "..yearday
+		elseif param == "equinox2" then
+			yearday = equinox2
+			return true, "Day of the year is now "..yearday
+		end
+		refresh_current_season()
+		return false
+	end
+}
+
 refresh_current_season()
 refresh_daylength()
 
 mt.register_globalstep(season_loop)
+
+mt.register_chatcommand("year-day", cmd_yearday)
