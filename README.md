@@ -27,13 +27,19 @@ Areas are dispatched as the following (Z axis):
 
 `/year-day [<yearday> | solstice | equinox | solstice2 | equinox2]`
 
-Allow to get or set the day of the year, require the `settime` privilege
+Allow to get or set the day of the year, require the `settime` privilege.
+
+`/season-area [new <cycle> <pos1> [<pos2>]] | [remove [id]]`
+
+Get current cycle area or define a new one, require the `season` privilege.
 
 ### Application Programming Interface
 
-For know there is only one shared function:
+Functions:
 
 `season.get_season(...)`
+
+`season.get_season_area(...)`
 
 with `...` any `Object | Vector | {x, y, z} | x, z | x, y, z` arguments and return the current season at the position
 

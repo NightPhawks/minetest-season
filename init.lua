@@ -45,6 +45,8 @@ local cycles = {
 	antarctic	= settings:get_bool("season.antarctic", true)
 }
 
+season.cycles = cycles
+
 local yearlength = settings:get("season.length_of_year") or 360
 
 --get storage
@@ -261,23 +263,25 @@ local cmd_yearday = {
 		local n = tonumber(param)
 		if #param < 1 then
 			return true, "Day of the year is "..yearday
-		elseif n then
-			yearday = n%yearlength
-			return true, "Day of the year is now "..yearday
-		elseif param == "solstice" then
-			yearday = solstice
-			return true, "Day of the year is now "..yearday
-		elseif param == "equinox" then
-			yearday = equinox
-			return true, "Day of the year is now "..yearday
-		elseif param == "solstice2" then
-			yearday = solstice2
-			return true, "Day of the year is now "..yearday
-		elseif param == "equinox2" then
-			yearday = equinox2
+		else
+			if n then
+				yearday = n%yearlength
+				return true, "Day of the year is now "..yearday
+			elseif param == "solstice" then
+				yearday = solstice
+				return true, "Day of the year is now "..yearday
+			elseif param == "equinox" then
+				yearday = equinox
+				return true, "Day of the year is now "..yearday
+			elseif param == "solstice2" then
+				yearday = solstice2
+				return true, "Day of the year is now "..yearday
+			elseif param == "equinox2" then
+				yearday = equinox2
+			end
+			refresh_current_season()
 			return true, "Day of the year is now "..yearday
 		end
-		refresh_current_season()
 		return false
 	end
 }
@@ -285,6 +289,6 @@ local cmd_yearday = {
 refresh_current_season()
 refresh_daylength()
 
-mt.register_globalstep(season_loop)
-
 mt.register_chatcommand("year-day", cmd_yearday)
+
+mt.register_globalstep(season_loop)

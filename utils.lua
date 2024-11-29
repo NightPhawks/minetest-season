@@ -40,7 +40,7 @@ function universal_pos(x, y, z)
 	elseif type_x == "table" then
 		--argument is already a vector
 		if vector.check(x) then
-			return v
+			return x
 		--argument is 'fake' vector
 		elseif x.x and x.y and x.z then
 			return vector.new(x)
