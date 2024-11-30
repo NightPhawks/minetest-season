@@ -11,17 +11,29 @@ This mod can be installed like
 
 Currently the mod is a heavy WIP, expect malfunction. The mod contain 7 cycles
 (also know as climates) respectively Polar, Temperate and Tropical for both side of the planet
-plus Equatorial. For now seasons are simply assigned to areas (Area mode) and season only affect
-player's length of the day, including polar day and night.
+plus Equatorial. There are currently 2 mode for defining cycle, area and mapgenmode.
+Currently season only affect player's length of the day, including polar day and night.
 
-Areas are dispatched as the following (Z axis):
-- Arctic			(24 km - 32 km North)
-- Boreal Temperate	(12 km - 24 km North)
-- Boreal Tropical	(4 km - 12 km North)
-- Equatorial 		(4 km South - 4 km North)
-- Austral Tropical	(4 km - 12 km South)
-- Austral Temperate	(12 km - 24 km South)
-- Antarctic			(24 km - 32 km South)
+### Area mode
+
+Area mode allow to define cycles by areas using the chat command `/season-area`.
+There are also statically defined area used as a fallback. In case of deactivated cycle,
+temperates cycles will overlap their side of "the hemisphere", if temperates cycles are deactivated
+equatorial cycle will replace the empty space, if equatorial cycle is deactivated... game crash :P
+
+Static areas are dispatched as the following (Z axis) (Replacement area):
+- Arctic			(24 km - 32 km North)		(None)
+- Boreal Temperate	(12 km - 24 km North)		(4km - 32 km North)
+- Boreal Tropical	(4 km - 12 km North)		(None)
+- Equatorial 		(4 km South - 4 km North)	(The entire map)
+- Austral Tropical	(4 km - 12 km South)		(None)
+- Austral Temperate	(12 km - 24 km South)		(4km - 32 km South)
+- Antarctic			(24 km - 32 km South)		(None)
+
+### Mapgen mode
+
+Mapgen mode use the map generator heat and humidity map used to define biome.
+This guarantee that cycles are mostly aligned with their biome at the cost of being as variable as them.
 
 ### Chat Commands
 
@@ -39,19 +51,32 @@ Functions:
 
 `season.get_season(...)`
 
+`season.get_cycle(...)`
+
 `season.get_season_area(...)`
+
+`season.get_season_mapgen(...)`
+
+`season.get_cycle_area(...)`
+
+`season.get_cycle_mapgen(...)`
 
 with `...` any `Object | Vector | {x, y, z} | x, z | x, y, z` arguments and return the current season at the position
 
 ### Upcoming Features
 
 - API allowing to communicate with other Minetest mod and much more functionality
-- Mapgen mode where cycles are defined by mapgen heat and humidity noises
 - Block mode where cycles are defined by biome topsoil
+- Override default farming to a more challenging level
 
 ## Settings
 
 Settings can be set manually by editing the `minetest.conf` file in base directory.
+
+Mode is the way season are defined, there are currently 2 modes available: Area (default) and Mapgen
+
+`season.mode = area`
+`season.mode = mapgen`
 
 Length of a year in in-game day, by default it is 360 almost as much as a real year, with
 default time speed a cycle last 180 RL-hour so about a bit more than a RL-week. The

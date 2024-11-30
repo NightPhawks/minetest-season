@@ -1,3 +1,12 @@
+#Define how season are defined
+#Area: season are defined by areas
+#Mapgen: season are defined like biome using heat and humidity maps
+season.mode (Mode) enum area area,mapgen
+
+#Length of a full seasonal cycle in in-game day
+#Minimum 16
+season.length_of_year (Length of the year) int 360 16 8000000
+
 #Enable Arctic seasons (Night/Day)
 season.arctic (Arctic seasons) bool true
 
@@ -18,7 +27,3 @@ season.temperate2 (Austral temperate seasons) bool true
 
 #Enable Antacrtic seasons (Day/Night)
 season.antarctic (Antarctic seasons) bool true
-
-#Length of a full seasonal cycle in in-game day
-#Minimum 16
-season.length_of_year (Length of the year) int 360 16 8000000

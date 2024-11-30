@@ -35,6 +35,11 @@ local tropical_summer_sunrise = 0.21	--5:00
 local tropical_summer_sunset = 0.79		--19:00
 
 --get settings
+
+local yearlength = settings:get("season.length_of_year") or 360
+
+local mode = settings:get("season.mode") or "area"
+
 local cycles = {
 	arctic		= settings:get_bool("season.arctic", true),
 	temperate	= settings:get_bool("season.temperate", true),
@@ -47,8 +52,6 @@ local cycles = {
 
 season.cycles = cycles
 
-local yearlength = settings:get("season.length_of_year") or 360
-
 --get storage
 local storage = mt.get_mod_storage()
 
@@ -59,6 +62,9 @@ dofile(season.modpath.."/utils.lua")
 
 --load areas system
 dofile(season.modpath.."/area.lua")
+
+--load mapgen system
+dofile(season.modpath.."/mapgen.lua")
 
 --init other variables
 
@@ -102,10 +108,26 @@ mt.register_privilege("season", {
 })
 
 --base function of the mod
+function season.get_cycle(...)
+	if mode == "mapgen" then
+		return season.get_cycle_mapgen(...)
+	end
+	return season.get_cycle_area(...)
+end
+
+--return the season in area mode
+function season.get_season_area(...)
+	return current_season[season.get_cycle_area(...)]
+end
+
+--return the season in mapgen mode
+function season.get_season_mapgen(...)
+	return current_season[season.get_cycle_mapgen(...)]
+end
+
+--actuall base function of the mod
 function season.get_season(...)
-	--local s = season.get_season_area(...)
-	--print(dump2(next(a)))
-	return season.get_season_area(...)
+	return current_season[season.get_cycle(...)]
 end
 
 --refresh current season table in function of the day of the year
@@ -237,18 +259,19 @@ local function season_loop(t)
 	end
 	refresh_light(time)
 	for _, player in pairs(mt.get_connected_players()) do
-		local plr_season = season.get_season(player)
+		local plr_cycle = season.get_cycle(player)
 		local sky = player:get_sky(true)
-		player:override_day_night_ratio(current_daylength[plr_season].light)
-		if is_polar(plr_season) then
+		player:override_day_night_ratio(current_daylength[plr_cycle].light)
+		if is_polar(plr_cycle) then
 			local sun = player:get_sun()
 			local stars = player:get_stars()
-			sun.visible = current_daylength[plr_season].sun
-			stars.visible = not current_daylength[plr_season].sun
-			stars.day_opacity = current_daylength[plr_season].sun and 0 or 1
+			sun.visible = current_daylength[plr_cycle].sun
+			stars.visible = not current_daylength[plr_cycle].sun
+			stars.day_opacity = current_daylength[plr_cycle].sun and 0 or 1
 			player:set_sun(sun)
 			player:set_stars(stars)
 		end
+		--print(plr_cycle)
 	end
 	lasttime = time
 end

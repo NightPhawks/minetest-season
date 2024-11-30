@@ -50,7 +50,7 @@ if season.cycles.equatorial then
 	static_areas:insert_area(v1, v2, "equatorial", 7)
 end
 
-function season.get_season_area(...)
+function season.get_cycle_area(...)
 	local pos = universal_pos(...)
 	if not pos then
 		return nil
@@ -89,7 +89,7 @@ params = "[new <cycle> <pos1> [<pos2>]] | [remove [id]]",
 		local plrpos = player:get_pos()
 		local params = param:split(" ")
 		if not next(params) then
-			local s, id = season.get_season_area(plrpos)
+			local s, id = season.get_cycle_area(plrpos)
 			return true, "You are currently in a "..s.." area ["..id.."]"
 		elseif params[1] == "new" then
 			if not season.cycles[params[2]] then
