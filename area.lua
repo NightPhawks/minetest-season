@@ -6,9 +6,6 @@ local settings = minetest.settings
 --and storage
 local storage = minetest.get_mod_storage()
 
---still need utility functions
-dofile(season.modpath.."/utils.lua")
-
 --store area defined by user
 local defined_areas = AreaStore()
 
@@ -51,7 +48,7 @@ if season.cycles.equatorial then
 end
 
 function season.get_cycle_area(...)
-	local pos = universal_pos(...)
+	local pos = season.utils.universal_pos(...)
 	if not pos then
 		return nil
 	end
@@ -88,10 +85,13 @@ params = "[new <cycle> <pos1> [<pos2>]] | [remove [id]]",
 		local player = minetest.get_player_by_name(name)
 		local plrpos = player:get_pos()
 		local params = param:split(" ")
+		--no parameters
 		if not next(params) then
 			local s, id = season.get_cycle_area(plrpos)
 			return true, "You are currently in a "..s.." area ["..id.."]"
+		--defining new season
 		elseif params[1] == "new" then
+			--invalid cycles
 			if not season.cycles[params[2]] then
 				return false, "Specified cycle is invalid or disabled"
 			end
@@ -123,6 +123,7 @@ params = "[new <cycle> <pos1> [<pos2>]] | [remove [id]]",
 				return false, "Failure, area ID is invalid or player not standing in defined area"
 			end
 		end
+		return false
 	end
 }
 

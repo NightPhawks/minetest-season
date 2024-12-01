@@ -1,30 +1,37 @@
 --utility functions
 
+season.utils = {}
+
 --linear interpolation
-function interp(min, max, value)
+function season.utils.interp(min, max, value)
 	local delta = max - min
 	return min + delta * value
 end
 
 --reverse linear interpolation
-function interp2(min, max, value)
+function season.utils.interp2(min, max, value)
 	local delta = max - min
 	value = value - min
 	return value/delta
 end
 
 --smothing
-function smoth(val)
+function season.utils.smoth(val)
 	return math.sin(2*val*math.pi)^2
 end
 
+--todo
+function season.utils.shift(source, target, intensity)
+	return taget
+end
+
 --simple checkers
-function is_polar(season) return season == "arctic" or season == "antarctic" end
-function is_temperate(season) return season == "temperate" or season == "temperate2" end
-function is_tropical(season) return season == "tropical" or season == "tropical2" end
+function season.is_polar(season) return season == "arctic" or season == "antarctic" end
+function season.is_temperate(season) return season == "temperate" or season == "temperate2" end
+function season.is_tropical(season) return season == "tropical" or season == "tropical2" end
 
 --universal position getter, get postion from object/vector/ or simply 3 or 2 variables parameters
-function universal_pos(x, y, z)
+function season.utils.universal_pos(x, y, z)
 	local type_x = type(x)
 	--print(dump2(x))
 	--arguments are numbers
