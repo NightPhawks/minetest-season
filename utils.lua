@@ -3,12 +3,14 @@
 season.utils = {}
 
 --linear interpolation
+--return min if value = 0 and max if value = 1
 function season.utils.interp(min, max, value)
 	local delta = max - min
 	return min + delta * value
 end
 
 --reverse linear interpolation
+--return 0 if value is on min and 1 if value is on max
 function season.utils.interp2(min, max, value)
 	local delta = max - min
 	value = value - min
@@ -16,7 +18,7 @@ function season.utils.interp2(min, max, value)
 end
 
 --smothing
-function season.utils.smoth(val)
+function season.utils.smooth(val)
 	return math.sin(2*val*math.pi)^2
 end
 

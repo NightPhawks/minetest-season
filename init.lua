@@ -34,6 +34,17 @@ local tropical_winter_sunset = 0.71		--17:00
 local tropical_summer_sunrise = 0.21	--5:00
 local tropical_summer_sunset = 0.79		--19:00
 
+--Orbital Tilting
+--local polar_orbital_tilt = 60
+
+local temperate_winter_tilt = 25
+local temperate_summer_tilt = 5
+
+local tropical_winter_tilt = 15
+local tropical_summer_tilt = -5
+
+local equatorial_tilt = 10
+
 --get settings
 
 local yearlength = settings:get("season.length_of_year") or 360
@@ -76,16 +87,22 @@ local equinox2 = math.round(yearlength*0.75)
 local lasttime = 0
 
 local current_season = table.copy(cycles)
+
+current_season.equatorial = "equatorial"
+
 local current_daylength = table.copy(cycles)
 
 for s, _ in pairs(current_daylength) do
 	current_daylength[s] = {
 		sunrise = 0.25,
 		sunset = 0.75,
-		sun = true,
+		--sun = true,
 		light = 0.5
 	}
 end
+
+current_daylength.arctic.tilt = -60
+current_daylength.antarctic.tilt = 60
 
 --backward compatibility
 if not mt.time_to_day_night_ratio then
@@ -165,8 +182,9 @@ end
 
 local function refresh_daylength()
 	local factor = 0
+	local factor2 = 0
 	--polar-season
-	if yearday < equinox and equonox2 < yearday then
+	if yearday < equinox and equinox2 < yearday then
 		current_daylength.arctic.light = mt.time_to_day_night_ratio(0)
 		current_daylength.arctic.sun = false
 		current_daylength.antarctic.light = mt.time_to_day_night_ratio(0.5)
@@ -234,6 +252,25 @@ local function refresh_daylength()
 
 	end
 
+	--Orbital Tilting
+	if yearday < solstice2 then
+		factor2 = season.utils.smooth(season.utils.interp2(solstice, solstice2, yearday))
+		current_daylength.temperate.tilt = season.utils.interp(-temperate_winter_tilt, -temperate_summer_tilt, factor2)
+		current_daylength.tropical.tilt = season.utils.interp(-tropical_winter_tilt, -tropical_summer_tilt, factor2)
+		current_daylength.equatorial.tilt = season.utils.interp(-equatorial_tilt, equatorial_tilt, factor2)
+		current_daylength.tropical2.tilt = season.utils.interp(tropical_summer_tilt, tropical_winter_tilt, factor2)
+		current_daylength.temperate2.tilt = season.utils.interp(temperate_summer_tilt, temperate_winter_tilt, factor2)
+
+	else
+		factor2 = season.utils.smooth(season.utils.interp2(solstice2, yearlength, yearday))
+		current_daylength.temperate.tilt = season.utils.interp(-temperate_summer_tilt, -temperate_winter_tilt, factor2)
+		current_daylength.tropical.tilt = season.utils.interp(-tropical_summer_tilt, -tropical_winter_tilt, factor2)
+		current_daylength.equatorial.tilt = season.utils.interp(equatorial_tilt, -equatorial_tilt, factor2)
+		current_daylength.tropical2.tilt = season.utils.interp(tropical_winter_tilt, tropical_summer_tilt, factor2)
+		current_daylength.temperate2.tilt = season.utils.interp(temperate_winter_tilt, temperate_summer_tilt, factor2)
+
+	end
+
 end
 
 local function refresh_light(time)
@@ -286,13 +323,17 @@ local function season_loop(t)
 	refresh_light(time)
 	for _, player in pairs(mt.get_connected_players()) do
 		local plr_cycle = season.get_cycle(player)
+		local polar = season.is_polar(plr_cycle)
 		local sky = player:get_sky(true)
 		player:override_day_night_ratio(current_daylength[plr_cycle].light)
 		local sun = player:get_sun()
 		local stars = player:get_stars()
-		sun.visible = current_daylength[plr_cycle].sun
-		stars.visible = not current_daylength[plr_cycle].sun
-		stars.day_opacity = current_daylength[plr_cycle].sun and 0 or 1
+		sky.body_orbit_tilt = current_daylength[plr_cycle].tilt
+		--sun and stars are alway visible outside polar region
+		sun.visible = current_daylength[plr_cycle].sun or not polar
+		stars.visible = not current_daylength[plr_cycle].sun or not polar
+		stars.day_opacity = stars.visible and polar and 1 or 0
+		player:set_sky(sky)
 		player:set_sun(sun)
 		player:set_stars(stars)
 		--print(plr_cycle)

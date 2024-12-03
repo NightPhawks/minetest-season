@@ -56,15 +56,15 @@ function season.get_cycle_area(...)
 	local id, a = next(at)
 	if not id then
 		at = static_areas:get_areas_for_pos(pos, false, true)
-		--local min = 8
-		--for i, a in pairs(at) do
-		--	if i < min then
-		--		min = i
-		--	end
-		--end
-		--id = min
-		--a = at[id]
-		id, a = next(at)
+		local min = 8
+		for i, a in pairs(at) do
+			if i < min then
+				min = i
+			end
+		end
+		id = min
+		a = at[id]
+		--id, a = next(at)
 	end
 	--print(dump2(at))
 	return a.data, id
