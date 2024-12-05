@@ -8,9 +8,21 @@ season.modpath = minetest.get_modpath("season")
 
 local settings = mt.settings
 
-local polar_seasons = {"Night", "Day"}
-local temperate_seasons = {"Winter", "Spring", "Summer", "Autumn"}
-local tropical_seasons = {"Wet season", "Dry season"}
+local polar_seasons = {"night", "day"}
+local temperate_seasons = {"winter", "spring", "summer", "autumn"}
+local tropical_seasons = {"wet", "dry"}
+
+season.seasons = {
+	night		= true,
+	day			= true,
+	winter		= true,
+	spring		= true,
+	summer		= true,
+	autumn		= true,
+	wet			= true,
+	dry			= true,
+	equatorial	= true
+}
 
 local priority = {
 	"equatorial",
@@ -76,6 +88,12 @@ dofile(season.modpath.."/area.lua")
 
 --load mapgen system
 dofile(season.modpath.."/mapgen.lua")
+
+--load farming functions (require farming mode)
+if minetest.get_modpath("farming") then
+	print("Season: Farming functions available")
+	dofile(season.modpath.."/farming.lua")
+end
 
 --init other variables
 
