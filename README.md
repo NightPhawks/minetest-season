@@ -19,7 +19,7 @@ tilt of sun and moon.
 
 Area mode allow to define cycles by areas using the chat command `/season-area`.
 There are also statically defined area used as a fallback. In case of deactivated cycle,
-temperates cycles will overlap their side of "the hemisphere", if temperates cycles are deactivated
+temperate cycles will overlap their side of "the hemisphere", if temperate cycles are deactivated
 equatorial cycle will replace the empty space, if equatorial cycle is deactivated... game crash :P
 
 Static areas are dispatched as the following (Z axis) (Replacement area):
@@ -79,7 +79,7 @@ functions and tables.
 the crops to not growth in that season.
 
 `wetsoil` is a boolean, if `true` it check is the crops is on a wet soil like the default
-farmin mod.
+farming mod.
 
 the function return a function that can be used in the `can_grow` field of the farming
 plant definition
@@ -108,7 +108,7 @@ theses functions are only available if the farming mod is present
 - API allowing to communicate with other Minetest mod and much more functionality
 - Block mode where cycles are defined by biome topsoil
 - Override default farming to a more challenging level
-- Moonphase and tides
+- Moon phase and tides
 
 ## Settings
 

@@ -1,0 +1,35 @@
+# textdomain: season
+
+#cycle
+arctic=arctique
+temperate=tempéré boréale
+tropical=tropicale boréale
+equatorial=équatoriale
+tropical2=tropical australe
+temperate2=tempéré australe
+antarctic=antarctique
+
+#saison
+night=nuit polaire
+day=jour polaire
+winter=hiver
+spring=printemps
+summer=été
+autumn=automne
+wet=saison humide
+dry=saison sèche
+
+#commandes et privilèges
+Allow manipulation of seasons areas=Permet la manipulation des zones de saison
+
+Allow to get or set the day of the year=Permet d’obtenir ou de définir le jour de l'année
+Day of the year is @1=Le jour de l'année est @1
+Day of the year is now @1=Le jour de l'année est désormais @1
+
+Get current cycle area or define a new one=Permet d’obtenir la zone actuelle ou d'en définir une nouvelle
+You are currently in @1 area [@2]=Vous êtes actuellement en zone @1 [@2]
+Specified cycle is invalid or disabled=Cycle invalide ou désactivé
+Season area [@1] has been successfully created=La zone de saison [@1] a été crée avec sucée
+Invalid position parameters, <pos> syntax is (X,Y,Z)=Paramètre de position invalide, la syntaxe pour <pos> est (X,Y,Z)
+Area successfully removed=La zone a été supprimé avec sucée
+Failure, area ID is invalid or player not standing in defined area=Échec, l'ID de la zone est incorrecte ou vous ne vous trouvez pas dans une zone

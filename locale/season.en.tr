@@ -1,0 +1,13 @@
+# textdomain: season
+
+#cycle
+temperate=boreal temperate
+tropical=boreal tropical
+tropical2=austral tropical
+temperate2=austral temperate
+
+#season
+night=polar night
+day=polar day
+wet=wet season
+dry=dry season

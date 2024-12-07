@@ -1,4 +1,5 @@
 --script to use season in area mode
+local S = minetest.get_translator("season")
 
 --still need settings
 local settings = minetest.settings
@@ -79,7 +80,7 @@ end
 
 local cmd_areadef = {
 params = "[new <cycle> <pos1> [<pos2>]] | [remove [id]]",
-	description = "Get current cycle area or define a new one",
+	description = S("Get current cycle area or define a new one"),
 	privs = {season = true},
 	func = function(name, param)
 		local player = minetest.get_player_by_name(name)
@@ -88,12 +89,12 @@ params = "[new <cycle> <pos1> [<pos2>]] | [remove [id]]",
 		--no parameters
 		if not next(params) then
 			local s, id = season.get_cycle_area(plrpos)
-			return true, "You are currently in a "..s.." area ["..id.."]"
+			return true, S("You are currently in @1 area [@2]",S(s) ,id)
 		--defining new season
 		elseif params[1] == "new" then
 			--invalid cycles
 			if not season.cycles[params[2]] then
-				return false, "Specified cycle is invalid or disabled"
+				return false, S("Specified cycle is invalid or disabled")
 			end
 			local id
 			local pos1, pos2
@@ -110,17 +111,17 @@ params = "[new <cycle> <pos1> [<pos2>]] | [remove [id]]",
 			end
 			if id then
 				save_areas()
-				return true, "Season area ["..id.."] has beed sucsefully created"
+				return true, S("Season area [@1] has been successfully created", id)
 			else
-				return false, "Invalid position parameters, pos syntaxe is (X,Y,Z)"
+				return false, S("Invalid position parameters, <pos> syntax is (X,Y,Z)")
 			end
 		elseif params[1] == "remove" then
 			local id = tonumber(params[2]) or next(defined_areas:get_areas_for_pos(plrpos))
 			if id and defined_areas:remove_area(id) then
 				save_areas()
-				return true, "Area succefully removed"
+				return true, S("Area successfully removed")
 			else
-				return false, "Failure, area ID is invalid or player not standing in defined area"
+				return false, S("Failure, area ID is invalid or player not standing in defined area")
 			end
 		end
 		return false

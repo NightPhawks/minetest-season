@@ -3,6 +3,8 @@
 --init constant
 local mt = minetest
 
+local S = mt.get_translator("season")
+
 season = {}
 season.modpath = minetest.get_modpath("season")
 
@@ -141,7 +143,7 @@ end
 
 --privs definition
 mt.register_privilege("season", {
-	description = "Allow manipulation of seasons areas"
+	description = S("Allow manipulation of seasons areas")
 })
 
 --base function of the mod
@@ -363,30 +365,26 @@ end
 
 local cmd_yearday = {
 	params = "[<yearday> | solstice | equinox | solstice2 | equinox2]",
-	description = "allow to get or set year",
+	description = S("Allow to get or set the day of the year"),
 	privs = {settime = true},
 	func = function(name, param)
 		local n = tonumber(param)
 		if #param < 1 then
-			return true, "Day of the year is "..yearday
+			return true, S("Day of the year is @1", yearday)
 		else
 			if n then
 				yearday = n%yearlength
-				return true, "Day of the year is now "..yearday
 			elseif param == "solstice" then
 				yearday = solstice
-				return true, "Day of the year is now "..yearday
 			elseif param == "equinox" then
 				yearday = equinox
-				return true, "Day of the year is now "..yearday
 			elseif param == "solstice2" then
 				yearday = solstice2
-				return true, "Day of the year is now "..yearday
 			elseif param == "equinox2" then
 				yearday = equinox2
 			end
 			refresh_current_season()
-			return true, "Day of the year is now "..yearday
+			return true, S("Day of the year is now @1", yearday)
 		end
 		return false
 	end
