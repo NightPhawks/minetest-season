@@ -25,5 +25,72 @@ season.tropical2 (Austral tropical seasons) bool true
 #Enable austral temperate seasons (Summer/Autumn/Winter/Spring)
 season.temperate2 (Austral temperate seasons) bool true
 
-#Enable Antacrtic seasons (Day/Night)
+#Enable Antarctic seasons (Day/Night)
 season.antarctic (Antarctic seasons) bool true
+
+[Day length]
+
+#Enable variation of day length in function of the day of the year and cycle
+season.daylength (Day length variation) bool true
+
+#Base natural light during the day
+season.dlight (Natural day light) float 1.0 0.525 1.0
+
+#Base natural light during the night
+season.nlight (Natural night light) float 0.175 0.0 0.475
+
+#Sunrise in temperate cycle at winter solstice
+#Default: 0.33 (8:00)
+season.temperate_winter_sunrise (Temperate winter sunrise) float 0.33 0.27 0.49
+
+#Sunset in temperate cycle at winter solstice
+#Default: 0.67 (16:00)
+season.temperate_winter_sunset (Temperate winter sunset) float 0.67 0.51 0.73
+
+#Sunrise in temperate cycle at summer solstice
+#Default: 0.17 (4:00)
+season.temperate_summer_sunrise (Temperate summer sunrise) float 0.17 0.01 0.23
+
+#Sunset in temperate cycle at summer solstice
+#Default: 0.83 (20:00)
+season.temperate_summer_sunset (Temperate summer sunset) float 0.83 0.77 0.99
+
+#Sunrise in tropical cycle at winter solstice
+#Default: 0.29 (7:00)
+season.tropical_winter_sunrise (Tropical wet season sunrise) float 0.29 0.26 0.37
+
+#Sunset in tropical cycle at winter solstice
+#Default: 0.71 (17:00)
+season.tropical_winter_sunset (Tropical wet season sunset) float 0.71 0.63 0.74
+
+#Sunrise in tropical cycle at summer solstice
+#Default: 0.21 (7:00)
+season.temperate_winter_sunrise (Tropical dry season sunrise) float 0.21 0.13 0.24
+
+#Sunset in tropical cycle at summer solstice
+#Default: 0.79 (19:00)
+season.temperate_winter_sunset (Tropical wet season sunset) float 0.79 0.76 0.87
+
+season.risetime (Sunrise/Sunset half-time) float 0.025 0.005 0.25
+
+[Orbital tilting]
+
+#Enable visual inclination of sun and moon in function of the day of the year and cycle
+season.orbital_tilting (Visual orbital tilt of sun and moon) bool true
+
+#Orbital tilting in polar cycle will be constant at this value
+season.polar_orbital_tilt (Polar orbital tilt) float 60 30 60
+
+#Maximum orbital tilting in temperate cycle occurring during winter
+season.temperate_winter_tilt (Temperate orbital tilt in winter) float 25 10 60
+
+#Minimum orbital tilting in temperate cycle occurring during summer
+season.temperate_summer_tilt (Temperate orbital tilt in summer) float 5 0 45
+
+#Maximum orbital tilting in tropical cycle occurring during wet season
+season.tropical_winter_tilt (Tropical orbital tilt during wet season) float 15 0 30
+
+#Minimum orbital tilting in temperate cycle occurring during dry season
+season.temperate_summer_tilt (Tropical orbital tilt during dry) float -5 -20 0
+
+season.equatorial_tilt (Equatorial orbital tilt) float 10 0 15
